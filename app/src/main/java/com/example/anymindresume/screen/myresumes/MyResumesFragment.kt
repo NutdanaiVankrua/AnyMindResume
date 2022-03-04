@@ -26,8 +26,8 @@ class MyResumesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews()
         setupLiveDataObservers()
-        binding.recyclerView.adapter = adapter
         viewModel.getResumes()
     }
 
@@ -42,6 +42,13 @@ class MyResumesFragment : Fragment() {
                 items.addAll(it)
                 notifyItemRangeChanged(0, items.count())
             }
+        }
+    }
+
+    private fun setupViews() {
+        binding.recyclerView.adapter = adapter
+        binding.floatingButton.setOnClickListener {
+            findNavController().navigate(R.id.action_my_resumes_to_resume_detail)
         }
     }
 
