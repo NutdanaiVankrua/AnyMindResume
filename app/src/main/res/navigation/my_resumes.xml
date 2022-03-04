@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_my_resumes"
     app:startDestination="@id/myResumesFragment">
 
     <fragment
         android:id="@+id/myResumesFragment"
-        android:name="com.example.anymindresume.screen.MyResumesFragment" />
+        android:name="com.example.anymindresume.screen.MyResumesFragment"
+        tools:layout="@layout/fragment_my_resumes" />
 
 </navigation>
