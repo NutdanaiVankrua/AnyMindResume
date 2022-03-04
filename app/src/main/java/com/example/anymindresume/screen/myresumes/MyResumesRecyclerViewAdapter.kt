@@ -9,7 +9,13 @@ class MyResumesRecyclerViewAdapter(
     var items: MutableList<Resume> = mutableListOf()
 ) : RecyclerView.Adapter<MyResumesRecyclerViewAdapter.ViewHolder>() {
 
-    class ViewHolder(private val binding: ViewHolderMyResumeBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(private val binding: ViewHolderMyResumeBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: Resume) {
+            binding.textView.text = item.name
+        }
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -18,9 +24,9 @@ class MyResumesRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // TODO
+        holder.bind(item = items[position])
     }
 
-    override fun getItemCount(): Int = 17
+    override fun getItemCount(): Int = items.count()
 
 }
