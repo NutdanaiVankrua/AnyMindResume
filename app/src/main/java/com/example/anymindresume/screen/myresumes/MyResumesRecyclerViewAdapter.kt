@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.anymindresume.databinding.ViewHolderMyResumeBinding
 
 class MyResumesRecyclerViewAdapter(
-    var items: MutableList<Resume> = mutableListOf()
+    var items: MutableList<Resume> = mutableListOf(),
+    val onItemClick: (Resume) -> Unit
 ) : RecyclerView.Adapter<MyResumesRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: ViewHolderMyResumeBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -24,7 +25,13 @@ class MyResumesRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(item = items[position])
+        val currentItem = items[position]
+        holder.apply {
+            bind(item = currentItem)
+            itemView.setOnClickListener {
+                onItemClick(currentItem)
+            }
+        }
     }
 
     override fun getItemCount(): Int = items.count()

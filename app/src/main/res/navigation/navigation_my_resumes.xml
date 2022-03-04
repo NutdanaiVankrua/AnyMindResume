@@ -8,6 +8,17 @@
     <fragment
         android:id="@+id/myResumesFragment"
         android:name="com.example.anymindresume.screen.myresumes.MyResumesFragment"
-        tools:layout="@layout/fragment_my_resumes" />
+        tools:layout="@layout/fragment_my_resumes">
+
+        <action
+            android:id="@+id/action_my_resumes_to_resume_detail"
+            app:destination="@+id/resumeDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/resumeDetailFragment"
+        android:name="com.example.anymindresume.screen.resume.detail.ResumeDetailFragment"
+        tools:layout="@layout/fragment_resume_detail" />
 
 </navigation>
