@@ -9,8 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.anymindresume.R
 import com.example.anymindresume.databinding.FragmentMyResumesBinding
+import com.example.anymindresume.util.ActionBarDynamicTitle
 
-class MyResumesFragment : Fragment() {
+class MyResumesFragment : Fragment(), ActionBarDynamicTitle {
 
     private var _binding: FragmentMyResumesBinding? = null
     private val binding get() = _binding!!
@@ -46,6 +47,7 @@ class MyResumesFragment : Fragment() {
     }
 
     private fun setupViews() {
+        requireActivity().setupTitle(title = resources.getString(R.string.navigation_bar_title_my_resumes_screen))
         binding.recyclerView.adapter = adapter
         binding.floatingButton.setOnClickListener {
             findNavController().navigate(R.id.action_my_resumes_to_resume_detail)
