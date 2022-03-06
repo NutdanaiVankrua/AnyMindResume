@@ -12,25 +12,25 @@ sealed class ResumeForm {
         val type: Type
     ) : ResumeForm() {
 
-        enum class Type {
-            MOBILE_NO,
-            EMAIL,
-            CAREER_OBJECTIVE,
-            YEARS_OF_EXPERIENCE,
-            COMPANY_NAME,
-            START_DATE,
-            END_DATE,
-            DESCRIPTION;
+        sealed class Type {
+            object MobileNo : Type()
+            object Email : Type()
+            object CareerObjective : Type()
+            object YearsOfExperience : Type()
+            data class CompanyName(val index: Int) : Type()
+            data class StartDate(val index: Int) : Type()
+            data class EndDate(val index: Int) : Type()
 
             fun getInputMode(): Int {
                 return when (this) {
-                    MOBILE_NO -> InputType.TYPE_CLASS_PHONE
-                    EMAIL -> InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-                    CAREER_OBJECTIVE -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                    YEARS_OF_EXPERIENCE -> InputType.TYPE_CLASS_NUMBER
+                    MobileNo -> InputType.TYPE_CLASS_PHONE
+                    Email -> InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    CareerObjective -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                    YearsOfExperience -> InputType.TYPE_CLASS_NUMBER
                     else -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
                 }
             }
+
         }
 
     }

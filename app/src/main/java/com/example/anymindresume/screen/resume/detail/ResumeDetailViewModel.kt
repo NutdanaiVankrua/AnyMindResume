@@ -6,20 +6,21 @@ import androidx.lifecycle.ViewModel
 
 class ResumeDetailViewModel : ViewModel() {
 
+    private var cacheForm: List<ResumeForm>? = null
     private val _form = MutableLiveData<List<ResumeForm>>()
     val form: LiveData<List<ResumeForm>> = _form
 
     fun getInitialForm() {
         _form.value = listOf(
             ResumeForm.Section(title = "Contact"),
-            ResumeForm.Input(input = "", hint = "Mobile No.", type = ResumeForm.Input.Type.MOBILE_NO),
-            ResumeForm.Input(input = "", hint = "Email", type = ResumeForm.Input.Type.EMAIL),
+            ResumeForm.Input(input = "", hint = "Mobile No.", type = ResumeForm.Input.Type.MobileNo),
+            ResumeForm.Input(input = "", hint = "Email", type = ResumeForm.Input.Type.Email),
             ResumeForm.Section(title = "Experience"),
-            ResumeForm.Input(input = "", hint = "Career Objective", type = ResumeForm.Input.Type.CAREER_OBJECTIVE),
+            ResumeForm.Input(input = "", hint = "Career Objective", type = ResumeForm.Input.Type.CareerObjective),
             ResumeForm.Input(
                 input = "",
                 hint = "Years of Experience",
-                type = ResumeForm.Input.Type.YEARS_OF_EXPERIENCE
+                type = ResumeForm.Input.Type.YearsOfExperience
             ),
             ResumeForm.Generate(
                 title = "Work Summary",
@@ -33,22 +34,54 @@ class ResumeDetailViewModel : ViewModel() {
     }
 
     fun addNewWorkSummarySection(section: ResumeForm.Generate.Type) {
+        consumeCacheForm()
         val currentForm = form.value?.toMutableList() ?: return
         val generateIndex = currentForm.indexOfFirst { it is ResumeForm.Generate && it.type == section }
         if (generateIndex < 0)
             return
 
+        val companySummaryCount = currentForm
+            .filter { it is ResumeForm.Input && it.type is ResumeForm.Input.Type.CompanyName }
+            .count()
+
         val inputCompany =
-            ResumeForm.Input(input = "", hint = "Company Name.", type = ResumeForm.Input.Type.COMPANY_NAME)
+            ResumeForm.Input(
+                input = "",
+                hint = "Company Name",
+                type = ResumeForm.Input.Type.CompanyName(index = companySummaryCount)
+            )
 
         /**
          * TODO: use date picker instead, need to introduce new type of view holder
          */
-        val inputStartDate = ResumeForm.Input(input = "", hint = "Start", type = ResumeForm.Input.Type.START_DATE)
-        val inputEndDate = ResumeForm.Input(input = "", hint = "End", type = ResumeForm.Input.Type.END_DATE)
+        val inputStartDate = ResumeForm.Input(
+            input = "",
+            hint = "Start",
+            type = ResumeForm.Input.Type.StartDate(index = companySummaryCount)
+        )
+        val inputEndDate = ResumeForm.Input(
+            input = "",
+            hint = "End",
+            type = ResumeForm.Input.Type.EndDate(index = companySummaryCount)
+        )
 
         currentForm.addAll(generateIndex, listOf(inputCompany, inputStartDate, inputEndDate))
         _form.value = currentForm
+    }
+
+    fun cacheInput(input: ResumeForm.Input) {
+        consumeCacheForm()
+        val currentForm = form.value?.toMutableList() ?: return
+        val matchIndex = currentForm.indexOfFirst { it is ResumeForm.Input && it.type == input.type }
+        if (matchIndex < 0)
+            return
+        currentForm[matchIndex] = input
+        cacheForm = currentForm
+    }
+
+    private fun consumeCacheForm() {
+        _form.value = cacheForm ?: return
+        cacheForm = null
     }
 
 }

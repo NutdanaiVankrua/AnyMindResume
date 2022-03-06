@@ -18,7 +18,7 @@
         tools:hint="@string/resume_detail_input_mobile_number_hint">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_mobile_no"
+            android:id="@+id/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"

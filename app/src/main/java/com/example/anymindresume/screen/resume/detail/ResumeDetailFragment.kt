@@ -1,11 +1,15 @@
 package com.example.anymindresume.screen.resume.detail
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anymindresume.R
 import com.example.anymindresume.databinding.FragmentResumeDetailBinding
@@ -16,9 +20,13 @@ class ResumeDetailFragment : Fragment(), ActionBarDynamicTitle {
     private var _binding: FragmentResumeDetailBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ResumeDetailViewModel by viewModels()
-    private val formAdapter = ResumeDetailRecyclerViewAdapter(onGenerateSectionAdd = {
-        viewModel.addNewWorkSummarySection(section = it)
-    })
+    private val formAdapter = ResumeDetailRecyclerViewAdapter(
+        onGenerateSectionAdd = {
+            binding.recyclerView.clearFocus()
+            viewModel.addNewWorkSummarySection(section = it)
+        },
+        onInputLoseFocus = { viewModel.cacheInput(input = it) }
+    )
 
     /**
      * TODO:
@@ -61,9 +69,23 @@ class ResumeDetailFragment : Fragment(), ActionBarDynamicTitle {
     }
 
     private fun setupLiveDataObservers() {
-        viewModel.form.observe(viewLifecycleOwner) {
+        viewModel.form.debounce(50).observe(viewLifecycleOwner) {
             formAdapter.submitList(it)
         }
     }
 
+}
+
+private fun <T> LiveData<T>.debounce(duration: Long = 1000L) = MediatorLiveData<T>().also { mld ->
+    val source = this
+    val handler = Handler(Looper.getMainLooper())
+
+    val runnable = Runnable {
+        mld.value = source.value
+    }
+
+    mld.addSource(source) {
+        handler.removeCallbacks(runnable)
+        handler.postDelayed(runnable, duration)
+    }
 }

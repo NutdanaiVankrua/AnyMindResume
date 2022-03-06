@@ -13,7 +13,8 @@ import com.example.anymindresume.screen.resume.detail.view.holders.ResumeFormSec
 import com.example.anymindresume.screen.resume.detail.view.holders.ResumeFormSectionViewHolder
 
 class ResumeDetailRecyclerViewAdapter(
-    private val onGenerateSectionAdd: (ResumeForm.Generate.Type) -> Unit
+    private val onGenerateSectionAdd: (ResumeForm.Generate.Type) -> Unit,
+    private val onInputLoseFocus: (ResumeForm.Input) -> Unit
 ) : ListAdapter<ResumeForm, RecyclerView.ViewHolder>(DiffCallback()) {
 
     class DiffCallback : DiffUtil.ItemCallback<ResumeForm>() {
@@ -41,7 +42,7 @@ class ResumeDetailRecyclerViewAdapter(
             }
             ViewHolderType.INPUT.rawValue -> {
                 val binding = ViewHolderFormInputBinding.inflate(inflater, parent, false)
-                ResumeFormInputViewHolder(binding)
+                ResumeFormInputViewHolder(binding, onInputLoseFocus)
             }
             ViewHolderType.GENERATE.rawValue -> {
                 val binding = ViewHolderFormGenerateBinding.inflate(inflater, parent, false)
