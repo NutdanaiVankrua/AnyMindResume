@@ -16,7 +16,11 @@ sealed class ResumeForm {
             MOBILE_NO,
             EMAIL,
             CAREER_OBJECTIVE,
-            YEARS_OF_EXPERIENCE;
+            YEARS_OF_EXPERIENCE,
+            COMPANY_NAME,
+            START_DATE,
+            END_DATE,
+            DESCRIPTION;
 
             fun getInputMode(): Int {
                 return when (this) {
@@ -24,6 +28,7 @@ sealed class ResumeForm {
                     EMAIL -> InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                     CAREER_OBJECTIVE -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
                     YEARS_OF_EXPERIENCE -> InputType.TYPE_CLASS_NUMBER
+                    else -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
                 }
             }
         }

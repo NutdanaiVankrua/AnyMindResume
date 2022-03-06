@@ -16,7 +16,9 @@ class ResumeDetailFragment : Fragment(), ActionBarDynamicTitle {
     private var _binding: FragmentResumeDetailBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ResumeDetailViewModel by viewModels()
-    private val formAdapter = ResumeDetailRecyclerViewAdapter()
+    private val formAdapter = ResumeDetailRecyclerViewAdapter(onGenerateSectionAdd = {
+        viewModel.addNewWorkSummarySection(section = it)
+    })
 
     /**
      * TODO:
@@ -35,7 +37,7 @@ class ResumeDetailFragment : Fragment(), ActionBarDynamicTitle {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setupLiveDataObservers()
-        viewModel.getForm()
+        viewModel.getInitialForm()
     }
 
     override fun onDestroyView() {

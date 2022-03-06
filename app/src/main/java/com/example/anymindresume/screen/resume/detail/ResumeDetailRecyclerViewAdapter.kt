@@ -12,7 +12,9 @@ import com.example.anymindresume.screen.resume.detail.view.holders.ResumeFormInp
 import com.example.anymindresume.screen.resume.detail.view.holders.ResumeFormSectionGenerateViewHolder
 import com.example.anymindresume.screen.resume.detail.view.holders.ResumeFormSectionViewHolder
 
-class ResumeDetailRecyclerViewAdapter : ListAdapter<ResumeForm, RecyclerView.ViewHolder>(DiffCallback()) {
+class ResumeDetailRecyclerViewAdapter(
+    private val onGenerateSectionAdd: (ResumeForm.Generate.Type) -> Unit
+) : ListAdapter<ResumeForm, RecyclerView.ViewHolder>(DiffCallback()) {
 
     class DiffCallback : DiffUtil.ItemCallback<ResumeForm>() {
         override fun areItemsTheSame(oldItem: ResumeForm, newItem: ResumeForm): Boolean {
@@ -43,7 +45,7 @@ class ResumeDetailRecyclerViewAdapter : ListAdapter<ResumeForm, RecyclerView.Vie
             }
             ViewHolderType.GENERATE.rawValue -> {
                 val binding = ViewHolderFormGenerateBinding.inflate(inflater, parent, false)
-                ResumeFormSectionGenerateViewHolder(binding)
+                ResumeFormSectionGenerateViewHolder(binding, onGenerateSectionAdd)
             }
             else -> TODO("not yet implemented")
         }
