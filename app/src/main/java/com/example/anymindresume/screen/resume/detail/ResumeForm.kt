@@ -5,6 +5,7 @@ import android.text.InputType
 sealed class ResumeForm {
 
     data class Section(val title: String) : ResumeForm()
+
     data class Input(
         val input: String,
         val hint: String,
@@ -25,6 +26,18 @@ sealed class ResumeForm {
                     YEARS_OF_EXPERIENCE -> InputType.TYPE_CLASS_NUMBER
                 }
             }
+        }
+
+    }
+
+    data class Generate(
+        val title: String,
+        val type: Type
+    ) : ResumeForm() {
+
+        enum class Type {
+            WORK_SUMMARY,
+            EDUCATION
         }
 
     }

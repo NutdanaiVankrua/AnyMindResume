@@ -20,6 +20,14 @@ class ResumeDetailViewModel : ViewModel() {
                 input = "",
                 hint = "Years of Experience",
                 type = ResumeForm.Input.Type.YEARS_OF_EXPERIENCE
+            ),
+            ResumeForm.Generate(
+                title = "Work Summary",
+                type = ResumeForm.Generate.Type.WORK_SUMMARY
+            ),
+            ResumeForm.Generate(
+                title = "Education",
+                type = ResumeForm.Generate.Type.EDUCATION
             )
         )
     }
