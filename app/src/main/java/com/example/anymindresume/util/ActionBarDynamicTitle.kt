@@ -10,4 +10,12 @@ interface ActionBarDynamicTitle {
         activity.supportActionBar?.title = title
     }
 
+    fun Activity?.showActionBar(visible: Boolean) {
+        val activity = (this as? AppCompatActivity) ?: return
+        if (visible)
+            activity.supportActionBar?.show()
+        else
+            activity.supportActionBar?.hide()
+    }
+
 }

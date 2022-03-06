@@ -31,7 +31,10 @@ class ResumeDetailFragment : Fragment(), ActionBarDynamicTitle {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().setupTitle(title = resources.getString(R.string.navigation_bar_title_resume_detail_screen))
+        requireActivity().apply {
+            setupTitle(title = resources.getString(R.string.navigation_bar_title_resume_detail_screen))
+            showActionBar(visible = false)
+        }
     }
 
     override fun onDestroyView() {

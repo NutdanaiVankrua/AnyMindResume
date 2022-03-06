@@ -2,4 +2,7 @@
     <string name="app_name">AnyMindResume</string>
     <string name="navigation_bar_title_my_resumes_screen">My Resumes</string>
     <string name="navigation_bar_title_resume_detail_screen">Resume Detail</string>
+    <string name="resume_detail_contact_section_title">Contact</string>
+    <string name="resume_detail_input_mobile_number_hint">Mobile No.</string>
+    <string name="resume_detail_input_email_hint">Email</string>
 </resources>

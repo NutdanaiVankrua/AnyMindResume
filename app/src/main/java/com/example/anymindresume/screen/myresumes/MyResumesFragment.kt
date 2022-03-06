@@ -47,7 +47,10 @@ class MyResumesFragment : Fragment(), ActionBarDynamicTitle {
     }
 
     private fun setupViews() {
-        requireActivity().setupTitle(title = resources.getString(R.string.navigation_bar_title_my_resumes_screen))
+        requireActivity().apply {
+            setupTitle(title = resources.getString(R.string.navigation_bar_title_my_resumes_screen))
+            showActionBar(visible = true)
+        }
         binding.recyclerView.adapter = adapter
         binding.floatingButton.setOnClickListener {
             findNavController().navigate(R.id.action_my_resumes_to_resume_detail)
