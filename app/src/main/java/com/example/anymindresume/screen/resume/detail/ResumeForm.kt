@@ -13,12 +13,16 @@ sealed class ResumeForm {
 
         enum class Type {
             MOBILE_NO,
-            EMAIL;
+            EMAIL,
+            CAREER_OBJECTIVE,
+            YEARS_OF_EXPERIENCE;
 
             fun getInputMode(): Int {
                 return when (this) {
                     MOBILE_NO -> InputType.TYPE_CLASS_PHONE
                     EMAIL -> InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    CAREER_OBJECTIVE -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                    YEARS_OF_EXPERIENCE -> InputType.TYPE_CLASS_NUMBER
                 }
             }
         }
