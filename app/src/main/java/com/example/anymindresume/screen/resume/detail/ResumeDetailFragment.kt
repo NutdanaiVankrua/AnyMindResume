@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anymindresume.R
 import com.example.anymindresume.databinding.FragmentResumeDetailBinding
 import com.example.anymindresume.util.ActionBarDynamicTitle
@@ -15,6 +16,7 @@ class ResumeDetailFragment : Fragment(), ActionBarDynamicTitle {
     private var _binding: FragmentResumeDetailBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ResumeDetailViewModel by viewModels()
+    private val formAdapter = ResumeDetailRecyclerViewAdapter()
 
     /**
      * TODO:
@@ -31,15 +33,35 @@ class ResumeDetailFragment : Fragment(), ActionBarDynamicTitle {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().apply {
-            setupTitle(title = resources.getString(R.string.navigation_bar_title_resume_detail_screen))
-            showActionBar(visible = false)
-        }
+        setupViews()
+        setupLiveDataObservers()
+        viewModel.getForm()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupViews() {
+        requireActivity().apply {
+            setupTitle(title = resources.getString(R.string.navigation_bar_title_resume_detail_screen))
+            showActionBar(visible = false)
+        }
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(
+                this.context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            adapter = formAdapter
+        }
+    }
+
+    private fun setupLiveDataObservers() {
+        viewModel.form.observe(viewLifecycleOwner) {
+            formAdapter.submitList(it)
+        }
     }
 
 }

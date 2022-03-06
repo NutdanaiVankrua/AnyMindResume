@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.anymindresume.databinding.ViewHolderMyResumeBinding
+import com.example.anymindresume.model.Resume
 
 class MyResumesRecyclerViewAdapter(
     var items: MutableList<Resume> = mutableListOf(),

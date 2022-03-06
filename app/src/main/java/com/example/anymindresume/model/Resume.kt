@@ -1,4 +1,4 @@
-package com.example.anymindresume.screen.myresumes
+package com.example.anymindresume.model
 
 import java.util.*
 

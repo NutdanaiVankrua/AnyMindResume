@@ -3,6 +3,9 @@ package com.example.anymindresume.screen.myresumes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.anymindresume.model.Contact
+import com.example.anymindresume.model.Experience
+import com.example.anymindresume.model.Resume
 
 class MyResumesViewModel : ViewModel() {
 
