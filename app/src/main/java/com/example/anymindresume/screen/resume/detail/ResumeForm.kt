@@ -32,7 +32,8 @@ sealed class ResumeForm {
                     MobileNo -> InputType.TYPE_CLASS_PHONE
                     Email -> InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                     CareerObjective -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                    YearsOfExperience -> InputType.TYPE_CLASS_NUMBER
+                    YearsOfExperience, is EducationPassingYear, is ProjectDetailTeamSize -> InputType.TYPE_CLASS_NUMBER
+                    is EducationGPA -> InputType.TYPE_NUMBER_FLAG_DECIMAL
                     else -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
                 }
             }
