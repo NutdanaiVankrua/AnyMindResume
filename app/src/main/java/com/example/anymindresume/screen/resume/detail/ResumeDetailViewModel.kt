@@ -51,18 +51,13 @@ class ResumeDetailViewModel : ViewModel() {
                 type = ResumeForm.Input.Type.CompanyName(index = companySummaryCount)
             )
 
-        /**
-         * TODO: use date picker instead, need to introduce new type of view holder
-         */
-        val inputStartDate = ResumeForm.Input(
-            input = "",
+        val inputStartDate = ResumeForm.DatePicker(
             hint = "Start",
-            type = ResumeForm.Input.Type.StartDate(index = companySummaryCount)
+            type = ResumeForm.DatePicker.Type.CompanyStartDate(index = companySummaryCount)
         )
-        val inputEndDate = ResumeForm.Input(
-            input = "",
-            hint = "End",
-            type = ResumeForm.Input.Type.EndDate(index = companySummaryCount)
+        val inputEndDate = ResumeForm.DatePicker(
+            hint = "Start",
+            type = ResumeForm.DatePicker.Type.CompanyEndDate(index = companySummaryCount)
         )
 
         currentForm.addAll(generateIndex, listOf(inputCompany, inputStartDate, inputEndDate))

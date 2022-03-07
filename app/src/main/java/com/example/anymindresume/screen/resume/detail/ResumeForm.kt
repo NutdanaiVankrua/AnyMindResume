@@ -18,8 +18,6 @@ sealed class ResumeForm {
             object CareerObjective : Type()
             object YearsOfExperience : Type()
             data class CompanyName(val index: Int) : Type()
-            data class StartDate(val index: Int) : Type()
-            data class EndDate(val index: Int) : Type()
 
             fun getInputMode(): Int {
                 return when (this) {
@@ -31,6 +29,18 @@ sealed class ResumeForm {
                 }
             }
 
+        }
+
+    }
+
+    data class DatePicker(
+        val hint: String,
+        val type: Type
+    ) : ResumeForm() {
+
+        sealed class Type {
+            data class CompanyStartDate(val index: Int) : Type()
+            data class CompanyEndDate(val index: Int) : Type()
         }
 
     }
