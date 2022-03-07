@@ -53,10 +53,13 @@ class ResumeDetailViewModel : ViewModel() {
 
         val inputStartDate = ResumeForm.DatePicker(
             hint = "Start",
+            placeholderText = "mm/yyyy",
             type = ResumeForm.DatePicker.Type.CompanyStartDate(index = companySummaryCount)
         )
         val inputEndDate = ResumeForm.DatePicker(
-            hint = "Start",
+            hint = "End",
+            helperText = "*Leave empty if still in employment",
+            placeholderText = "mm/yyyy",
             type = ResumeForm.DatePicker.Type.CompanyEndDate(index = companySummaryCount)
         )
 

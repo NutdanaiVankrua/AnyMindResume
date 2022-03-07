@@ -35,6 +35,8 @@ sealed class ResumeForm {
 
     data class DatePicker(
         val hint: String,
+        val helperText: String? = null,
+        val placeholderText: String,
         val type: Type
     ) : ResumeForm() {
 

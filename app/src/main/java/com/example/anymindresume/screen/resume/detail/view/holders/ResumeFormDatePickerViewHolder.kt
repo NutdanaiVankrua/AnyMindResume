@@ -9,7 +9,11 @@ class ResumeFormDatePickerViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: ResumeForm.DatePicker) {
-        binding.textInputLayout.hint = item.hint
+        binding.textInputLayout.apply {
+            hint = item.hint
+            placeholderText = item.placeholderText
+            helperText = item.helperText
+        }
     }
 
 }
