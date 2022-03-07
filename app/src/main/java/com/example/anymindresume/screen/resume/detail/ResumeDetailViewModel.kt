@@ -22,14 +22,9 @@ class ResumeDetailViewModel : ViewModel() {
                 hint = "Years of Experience",
                 type = ResumeForm.Input.Type.YearsOfExperience
             ),
-            ResumeForm.Generate(
-                title = "Work Summary",
-                type = ResumeForm.Generate.Type.WORK_SUMMARY
-            ),
-            ResumeForm.Generate(
-                title = "Education",
-                type = ResumeForm.Generate.Type.EDUCATION
-            )
+            ResumeForm.Generate.Type.WORK_SUMMARY.create(),
+            ResumeForm.Generate.Type.EDUCATION.create(),
+            ResumeForm.Generate.Type.PROJECT_DETAIL.create()
         )
     }
 
@@ -37,6 +32,7 @@ class ResumeDetailViewModel : ViewModel() {
         when (section) {
             ResumeForm.Generate.Type.WORK_SUMMARY -> addNewWorkSummarySection()
             ResumeForm.Generate.Type.EDUCATION -> addNewEducationSection()
+            ResumeForm.Generate.Type.PROJECT_DETAIL -> addNewProjectDetailSection()
         }
     }
 
@@ -55,7 +51,6 @@ class ResumeDetailViewModel : ViewModel() {
                 hint = "Company Name",
                 type = ResumeForm.Input.Type.CompanyName(index = companySummaryCount)
             )
-
         val inputStartDate = ResumeForm.DatePicker(
             hint = "Start",
             placeholderText = "mm/yyyy",
@@ -78,7 +73,6 @@ class ResumeDetailViewModel : ViewModel() {
             .indexOfFirst { it is ResumeForm.Generate && it.type == ResumeForm.Generate.Type.EDUCATION }
         if (generateIndex < 0)
             return
-
         val educationCount = currentForm
             .count { it is ResumeForm.Input && it.type is ResumeForm.Input.Type.EducationClass }
 
@@ -101,6 +95,47 @@ class ResumeDetailViewModel : ViewModel() {
             type = ResumeForm.Input.Type.EducationGPA(index = educationCount)
         )
         currentForm.addAll(generateIndex, listOf(inputClass, inputPassingYear, inputGPA))
+        _form.value = currentForm
+    }
+
+    private fun addNewProjectDetailSection() {
+        consumeCacheForm()
+        val currentForm = form.value?.toMutableList() ?: return
+        val generateIndex = currentForm
+            .indexOfFirst { it is ResumeForm.Generate && it.type == ResumeForm.Generate.Type.PROJECT_DETAIL }
+        if (generateIndex < 0)
+            return
+        val projectDetailCount = currentForm
+            .count { it is ResumeForm.Input && it.type is ResumeForm.Input.Type.ProjectDetailName }
+        val inputProjectName = ResumeForm.Input(
+            input = "",
+            hint = "Project name",
+            type = ResumeForm.Input.Type.ProjectDetailName(index = projectDetailCount)
+        )
+        val inputTeamSize = ResumeForm.Input(
+            input = "",
+            hint = "Team size",
+            type = ResumeForm.Input.Type.ProjectDetailTeamSize(index = projectDetailCount)
+        )
+        val inputSummary = ResumeForm.Input(
+            input = "",
+            hint = "Summary",
+            type = ResumeForm.Input.Type.ProjectDetailSummary(index = projectDetailCount)
+        )
+        val inputTechnology = ResumeForm.Input(
+            input = "",
+            hint = "Technology used",
+            type = ResumeForm.Input.Type.ProjectDetailTechnology(index = projectDetailCount)
+        )
+        val inputRole = ResumeForm.Input(
+            input = "",
+            hint = "Role",
+            type = ResumeForm.Input.Type.ProjectDetailRole(index = projectDetailCount)
+        )
+        currentForm.addAll(
+            generateIndex,
+            listOf(inputProjectName, inputTeamSize, inputSummary, inputTechnology, inputRole)
+        )
         _form.value = currentForm
     }
 

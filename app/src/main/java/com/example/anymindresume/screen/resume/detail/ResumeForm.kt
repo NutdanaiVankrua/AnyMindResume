@@ -21,6 +21,11 @@ sealed class ResumeForm {
             data class EducationClass(val index: Int) : Type()
             data class EducationPassingYear(val index: Int) : Type()
             data class EducationGPA(val index: Int) : Type()
+            data class ProjectDetailName(val index: Int) : Type()
+            data class ProjectDetailTeamSize(val index: Int) : Type()
+            data class ProjectDetailSummary(val index: Int) : Type()
+            data class ProjectDetailTechnology(val index: Int) : Type()
+            data class ProjectDetailRole(val index: Int) : Type()
 
             fun getInputMode(): Int {
                 return when (this) {
@@ -57,7 +62,25 @@ sealed class ResumeForm {
 
         enum class Type {
             WORK_SUMMARY,
-            EDUCATION
+            EDUCATION,
+            PROJECT_DETAIL;
+
+            fun create(): Generate {
+                return when (this) {
+                    WORK_SUMMARY -> Generate(
+                        title = "Work Summary",
+                        type = WORK_SUMMARY
+                    )
+                    EDUCATION -> Generate(
+                        title = "Education",
+                        type = EDUCATION
+                    )
+                    PROJECT_DETAIL -> Generate(
+                        title = "Project Details",
+                        type = PROJECT_DETAIL
+                    )
+                }
+            }
         }
 
     }
