@@ -23,7 +23,7 @@ class ResumeDetailFragment : Fragment(), ActionBarDynamicTitle {
     private val formAdapter = ResumeDetailRecyclerViewAdapter(
         onGenerateSectionAdd = {
             binding.recyclerView.clearFocus()
-            viewModel.addNewWorkSummarySection(section = it)
+            viewModel.addNewSection(section = it)
         },
         onInputLoseFocus = { viewModel.cacheInput(input = it) }
     )

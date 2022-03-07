@@ -18,6 +18,9 @@ sealed class ResumeForm {
             object CareerObjective : Type()
             object YearsOfExperience : Type()
             data class CompanyName(val index: Int) : Type()
+            data class EducationClass(val index: Int) : Type()
+            data class EducationPassingYear(val index: Int) : Type()
+            data class EducationGPA(val index: Int) : Type()
 
             fun getInputMode(): Int {
                 return when (this) {

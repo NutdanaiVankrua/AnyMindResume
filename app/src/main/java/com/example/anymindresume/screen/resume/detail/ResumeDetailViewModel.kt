@@ -33,17 +33,22 @@ class ResumeDetailViewModel : ViewModel() {
         )
     }
 
-    fun addNewWorkSummarySection(section: ResumeForm.Generate.Type) {
+    fun addNewSection(section: ResumeForm.Generate.Type) {
+        when (section) {
+            ResumeForm.Generate.Type.WORK_SUMMARY -> addNewWorkSummarySection()
+            ResumeForm.Generate.Type.EDUCATION -> addNewEducationSection()
+        }
+    }
+
+    private fun addNewWorkSummarySection() {
         consumeCacheForm()
         val currentForm = form.value?.toMutableList() ?: return
-        val generateIndex = currentForm.indexOfFirst { it is ResumeForm.Generate && it.type == section }
+        val generateIndex = currentForm
+            .indexOfFirst { it is ResumeForm.Generate && it.type == ResumeForm.Generate.Type.WORK_SUMMARY }
         if (generateIndex < 0)
             return
-
         val companySummaryCount = currentForm
-            .filter { it is ResumeForm.Input && it.type is ResumeForm.Input.Type.CompanyName }
-            .count()
-
+            .count { it is ResumeForm.Input && it.type is ResumeForm.Input.Type.CompanyName }
         val inputCompany =
             ResumeForm.Input(
                 input = "",
@@ -62,8 +67,40 @@ class ResumeDetailViewModel : ViewModel() {
             placeholderText = "mm/yyyy",
             type = ResumeForm.DatePicker.Type.CompanyEndDate(index = companySummaryCount)
         )
-
         currentForm.addAll(generateIndex, listOf(inputCompany, inputStartDate, inputEndDate))
+        _form.value = currentForm
+    }
+
+    private fun addNewEducationSection() {
+        consumeCacheForm()
+        val currentForm = form.value?.toMutableList() ?: return
+        val generateIndex = currentForm
+            .indexOfFirst { it is ResumeForm.Generate && it.type == ResumeForm.Generate.Type.EDUCATION }
+        if (generateIndex < 0)
+            return
+
+        val educationCount = currentForm
+            .count { it is ResumeForm.Input && it.type is ResumeForm.Input.Type.EducationClass }
+
+        /**
+         * TODO: Introduce drop down
+         */
+        val inputClass = ResumeForm.Input(
+            input = "",
+            hint = "Classes",
+            type = ResumeForm.Input.Type.EducationClass(index = educationCount)
+        )
+        val inputPassingYear = ResumeForm.Input(
+            input = "",
+            hint = "Passing Year",
+            type = ResumeForm.Input.Type.EducationPassingYear(index = educationCount)
+        )
+        val inputGPA = ResumeForm.Input(
+            input = "",
+            hint = "CGPA",
+            type = ResumeForm.Input.Type.EducationGPA(index = educationCount)
+        )
+        currentForm.addAll(generateIndex, listOf(inputClass, inputPassingYear, inputGPA))
         _form.value = currentForm
     }
 
